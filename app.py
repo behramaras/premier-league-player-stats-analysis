@@ -1,6 +1,65 @@
 import streamlit as st
 import pandas as pd
 
+# Page config
+st.set_page_config(
+    page_title="Premier League Player Stats Explorer",
+    page_icon="⚽",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# Custom CSS style injection
+st.markdown(
+    """
+    <style>
+        [data-testid="stAppViewContainer"] {
+            background-color: #FFFFFF !important;
+            color: #1C1C1E !important;
+        }
+
+        [data-testid="stHeader"] {
+            background: #3F1052 !important;
+        }
+
+        [data-testid="stSidebar"] {
+            background-color: #F2F2F7 !important;
+        }
+
+        h1, h2, h3 {
+            color: #3F1052 !important;
+        }
+
+        .stDataFrame {
+            background-color: #F2F2F7 !important;
+            border-radius: 10px !important;
+            padding: 8px !important;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# --- TABLE INFORMATION SECTION ---
+st.info("""
+💡 **Tip:**  
+- Click on column headers to sort player stats.  
+- Use the search bar to filter players.  
+- Scroll through the table to view all data.  
+
+**📊 Column Guide:**  
+- `player_name`: The player’s full name  
+- `team`: The club the player belongs to  
+- `position`: The player’s on-field position (DF, MF, FW, GK)  
+- `goals`: Total goals scored  
+- `assists`: Total assists made  
+- `expected_goals (xG)`: Expected goals metric  
+- `expected_assists (xAG)`: Expected assists metric  
+- `minutes_played`: Total minutes played in the season  
+- `matches_played`: Number of matches played  
+- `age`: The player’s age  
+""")
+
 # Load the cleaned dataset
 df = pd.read_csv("clean_players.csv")
 
@@ -15,7 +74,7 @@ search = st.text_input("Search for a player:")
 filtered = df[df['player_name'].str.contains(search, case=False, na=False)]
 
 # Display a simple table with key player stats
-st.dataframe(filtered[['player_name', 'team', 'position', 'goals', 'assists']])
+st.dataframe(filtered[['player_name', 'team', 'position', 'goals', 'assists']], hide_index=True)
 
 # --- PLAYER DETAIL SECTION ---
 # Dropdown (selectbox) to choose a player from the filtered list
@@ -26,7 +85,7 @@ player_data = df[df['player_name'] == player]
 
 # Display the detailed stats for the selected player
 st.write("### Player Details")
-st.write(player_data)
+st.dataframe(player_data.reset_index(drop=True), hide_index=True)
 
 # --- PLAYER COMPARISON SECTION ---
 # Allow the user to choose two players to compare
@@ -53,3 +112,5 @@ else:
 
     # Display a bar chart comparing goals, assists, and expected goals
     st.bar_chart(compare.set_index('player_name')[['goals', 'assists', 'expected_goals']])
+
+st.caption("Created by Behram Aras")

@@ -41,24 +41,28 @@ st.markdown(
 )
 
 # --- TABLE INFORMATION SECTION ---
-st.info("""
-💡 **Tip:**  
-- Click on column headers to sort player stats.  
-- Use the search bar to filter players.  
-- Scroll through the table to view all data.  
+with st.expander("ℹ️ How to Use & Column Descriptions"):
+    st.markdown("""
+    **🔍 How to Use the Table:**
+    - Click any **column header** to sort the table by that statistic.  
+      For example, click **Goals** to sort players by goal count.  
+    - Use the **search bar** to find a specific player by name.  
+    - Scroll horizontally or vertically to explore all player stats.
 
-**📊 Column Guide:**  
-- `player_name`: The player’s full name  
-- `team`: The club the player belongs to  
-- `position`: The player’s on-field position (DF, MF, FW, GK)  
-- `goals`: Total goals scored  
-- `assists`: Total assists made  
-- `expected_goals (xG)`: Expected goals metric  
-- `expected_assists (xAG)`: Expected assists metric  
-- `minutes_played`: Total minutes played in the season  
-- `matches_played`: Number of matches played  
-- `age`: The player’s age  
-""")
+    **📊 Column Descriptions:**
+    | Column | Description |
+    |:--|:--|
+    | `player_name` | The player’s full name |
+    | `team` | The club the player belongs to |
+    | `position` | The player’s on-field position (DF, MF, FW, GK) |
+    | `goals` | Total goals scored |
+    | `assists` | Total assists made |
+    | `expected_goals (xG)` | Expected goals metric |
+    | `expected_assists (xAG)` | Expected assists metric |
+    | `minutes_played` | Total minutes played in the season |
+    | `matches_played` | Number of matches played |
+    | `age` | The player’s age |
+    """)
 
 # Load the cleaned dataset
 df = pd.read_csv("clean_players.csv")
@@ -68,7 +72,7 @@ st.title("⚽ Premier League Player Stats Explorer (2024-2025)")
 
 # --- PLAYER SEARCH SECTION ---
 # Text input for searching a player by name (case insensitive)
-search = st.text_input("Search for a player:")
+search = st.text_input("Search for a player:", placeholder="Enter here!")
 
 # Filter the dataframe to show only players matching the search term
 filtered = df[df['player_name'].str.contains(search, case=False, na=False)]
@@ -78,13 +82,13 @@ st.dataframe(filtered[['player_name', 'team', 'position', 'goals', 'assists']], 
 
 # --- PLAYER DETAIL SECTION ---
 # Dropdown (selectbox) to choose a player from the filtered list
+st.write("### Player Details")
 player = st.selectbox("Select a player to view details", filtered['player_name'])
 
 # Retrieve the full data row for the selected player
 player_data = df[df['player_name'] == player]
 
 # Display the detailed stats for the selected player
-st.write("### Player Details")
 st.dataframe(player_data.reset_index(drop=True), hide_index=True)
 
 # --- PLAYER COMPARISON SECTION ---

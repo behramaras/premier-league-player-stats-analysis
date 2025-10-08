@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import altair as alt
 
 # Page config
 st.set_page_config(
@@ -81,8 +82,19 @@ filtered = df[df['player_name'].str.contains(search, case=False, na=False,regex=
 st.dataframe(filtered.sort_values('player_name')[['player_name', 'team', 'position', 'goals', 'assists']], hide_index=True)
 
 # --- TOP 10 GOAL CONTRIBUTORS SECTION ---
+# Group data first (to merge players with multiple team entries)
+df_grouped = (df.groupby("player_name", as_index=False)
+            .agg({
+        "goals": "sum",
+        "assists": "sum",
+        "goals_assists_total": "sum",
+})
+)
+
 st.write("### 🏆 Top 10 Goal Contributors")
-st.dataframe(df.nlargest(10, "goals_assists_total"), hide_index=True)
+
+# Show top 10 players by total goal contributions
+st.dataframe(df_grouped.nlargest(10, "goals_assists_total"), hide_index=True)
 
 # --- PLAYER DETAIL SECTION ---
 # Dropdown (selectbox) to choose a player from the filtered list
@@ -96,29 +108,64 @@ player_data = df[df['player_name'] == player]
 st.dataframe(player_data.reset_index(drop=True), hide_index=True)
 
 # --- PLAYER COMPARISON SECTION ---
-# Allow the user to choose two players to compare
 st.subheader("Player Comparison")
 
-# Dropdown menus for selecting two players to compare
-player1 = st.selectbox("Compare Player 1", sorted(df['player_name']))
-player2 = st.selectbox("Compare Player 2", sorted(df['player_name']))
+# Group players by both name and team to handle mid-season transfers
+df_grouped2 = (
+    df.groupby(["player_name", "team"], as_index=False)
+    .agg({
+        "goals": "sum",
+        "assists": "sum",
+        "expected_goals": "sum"
+    })
+)
 
-# If the same player is selected twice, show a warning message
-if player1 == player2:
+# Identify players who have played for more than one team
+duplicate_players = df_grouped2[df_grouped2.duplicated("player_name", keep=False)]["player_name"].unique()
+
+# Create a TOTAL row that sums up all stats for each duplicate player
+totals = (
+    df_grouped2[df_grouped2["player_name"].isin(duplicate_players)]
+    .groupby("player_name", as_index=False)
+    .agg({
+        "goals": "sum",
+        "assists": "sum",
+        "expected_goals": "sum"
+    })
+)
+totals["team"] = "TOTAL"
+
+# Combine team-level stats and total-level stats
+df_grouped2 = pd.concat([df_grouped2, totals], ignore_index=True)
+
+# Create a combined label for dropdowns (e.g., "James Ward-Prowse (West Ham)")
+df_grouped2["player_label"] = df_grouped2["player_name"] + " (" + df_grouped2["team"] + ")"
+
+# Sort all player labels alphabetically for cleaner dropdowns
+player_labels = sorted(df_grouped2["player_label"])
+
+# Create dropdown menus for selecting two players to compare
+player1_label = st.selectbox("Compare Player 1", player_labels)
+player2_label = st.selectbox("Compare Player 2", player_labels)
+
+# Prevent user from comparing the same player-team combination
+if player1_label == player2_label:
     st.warning("⚠️ Please select two different players to compare.")
 else:
-    # Filter the DataFrame to include only the two selected players
-    compare = df[df['player_name'].isin([player1, player2])]
-    
-    # Ensure the bar chart displays players in the same order as selected
-    compare['player_name'] = pd.Categorical(
-        compare['player_name'], 
-        categories=[player1, player2], 
+    # Filter DataFrame to include only the two selected players
+    compare = df_grouped2[df_grouped2["player_label"].isin([player1_label, player2_label])].copy()
+
+    # Maintain dropdown order in the chart for consistency
+    compare["player_label"] = pd.Categorical(
+        compare["player_label"],
+        categories=[player1_label, player2_label],
         ordered=True
     )
-    compare = compare.sort_values('player_name')
+    compare = compare.sort_values("player_label")
 
-    # Display a bar chart comparing goals, assists, and expected goals
-    st.bar_chart(compare.set_index('player_name')[['goals', 'assists', 'expected_goals']])
+    # Set player label as index and plot comparison chart
+    compare = compare.set_index("player_label")
+    st.bar_chart(compare[["goals", "assists", "expected_goals"]])
+
 
 st.caption("Created by Behram Aras")

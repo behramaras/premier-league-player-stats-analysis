@@ -75,15 +75,19 @@ st.title("⚽ Premier League Player Stats Explorer (2024-2025)")
 search = st.text_input("Search for a player:", placeholder="Enter here!")
 
 # Filter the dataframe to show only players matching the search term
-filtered = df[df['player_name'].str.contains(search, case=False, na=False)]
+filtered = df[df['player_name'].str.contains(search, case=False, na=False,regex=False)]
 
 # Display a simple table with key player stats
-st.dataframe(filtered[['player_name', 'team', 'position', 'goals', 'assists']], hide_index=True)
+st.dataframe(filtered.sort_values('player_name')[['player_name', 'team', 'position', 'goals', 'assists']], hide_index=True)
+
+# --- TOP 10 GOAL CONTRIBUTORS SECTION ---
+st.write("### 🏆 Top 10 Goal Contributors")
+st.dataframe(df.nlargest(10, "goals_assists_total"), hide_index=True)
 
 # --- PLAYER DETAIL SECTION ---
 # Dropdown (selectbox) to choose a player from the filtered list
 st.write("### Player Details")
-player = st.selectbox("Select a player to view details", filtered['player_name'])
+player = st.selectbox("Select a player to view details", sorted(df['player_name']))
 
 # Retrieve the full data row for the selected player
 player_data = df[df['player_name'] == player]
@@ -96,8 +100,8 @@ st.dataframe(player_data.reset_index(drop=True), hide_index=True)
 st.subheader("Player Comparison")
 
 # Dropdown menus for selecting two players to compare
-player1 = st.selectbox("Compare Player 1", df['player_name'])
-player2 = st.selectbox("Compare Player 2", df['player_name'])
+player1 = st.selectbox("Compare Player 1", sorted(df['player_name']))
+player2 = st.selectbox("Compare Player 2", sorted(df['player_name']))
 
 # If the same player is selected twice, show a warning message
 if player1 == player2:

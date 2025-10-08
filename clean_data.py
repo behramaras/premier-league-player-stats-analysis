@@ -56,9 +56,7 @@ numeric_cols = [
 for col in numeric_cols:
     df[col] = pd.to_numeric(df[col], errors='coerce')  # convert invalid entries to NaN
 
-# Optional: check the data types after conversion
-print(df.dtypes)
-
+df['nationality'] = df['nationality'].apply(lambda x: x.split(' ')[-1] if isinstance(x, str) and ' ' in x else x)
 
 # Save the cleaned dataset to a new CSV file
 df.to_csv("clean_players.csv", index=False)

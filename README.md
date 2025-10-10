@@ -42,6 +42,13 @@ Built with **Python**, **Streamlit**, and **Pandas**, this tool allows you to ea
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
-- in progress..
+The project is organized as follows:
+
+- **app.py** — Main Streamlit app (entry point).  
+- **clean_data.py** — Script for cleaning and preprocessing player data.  
+- **export_data.py** — Script for scraping and exporting raw player data.  
+- **clean_players.csv** — Cleaned dataset containing player statistics.  
+- **README.md** — Project documentation and usage guide.
+

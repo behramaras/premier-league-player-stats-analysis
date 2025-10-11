@@ -52,3 +52,15 @@ The project is organized as follows:
 - **clean_players.csv** — Cleaned dataset containing player statistics.  
 - **README.md** — Project documentation and usage guide.
 
+## Setup Instructions
+
+Follow these steps to set up and run the project locally.
+
+---
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/yourusername/premier-league-player-stats-explorer.git
+cd premier-league-player-stats-explorer
+
+

@@ -1,0 +1,44 @@
+# -----------------------------
+# Python / Streamlit Project
+# -----------------------------
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Streamlit cache and logs
+.streamlit/
+.streamlit/secrets.toml
+.streamlit/config.toml
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+*.log
+
+# Data files (optional - uncomment if private)
+# *.csv
+# *.xlsx
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor settings
+.vscode/
+.idea/
+
+# Jupyter / Notebook
+.ipynb_checkpoints/
+*.ipynb
+
+# Build / Packaging
+build/
+dist/
+*.egg-info/
+
+# Temporary files
+*.tmp
+*.bak

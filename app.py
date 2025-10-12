@@ -87,6 +87,13 @@ st.markdown("""
 [data-testid="stSidebar"] {background-color:#F2F2F7;}
 h1,h2,h3 {color:#3F1052;}
 .stDataFrame {background-color:#F2F2F7;border-radius:10px;padding:8px;}
+            
+/* ⚠️ Streamlit warning box customization */
+div[data-testid="stNotification"] {
+    background-color: #FFF8E1 !important;
+    color: #3F1052 !important;
+    border: 1px solid #E0C97F !important;
+}
 </style>
 """, unsafe_allow_html=True)
 

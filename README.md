@@ -59,7 +59,7 @@ This project scrapes, cleans, and visualizes Premier League player statistics fo
 | **Streamlit** | Web framework for interactive dashboards |
 | **Pandas** | Data manipulation and aggregation |
 | **CSV** | Cleaned dataset (`clean_players.csv`) |
-| **st-aggrid**| Interactive tables with sorting, filtering, pagination, and sidebar options |
+| **Streamlit-AgGrid**| Interactive tables with sorting, filtering, pagination, and sidebar options |
 ---
 
 ## Project Structure

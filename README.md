@@ -2,7 +2,7 @@
 
 An interactive Streamlit web app to explore, compare, and analyze player performance data from the **Premier League 2024–25** season.  
 Built with **Python**, **Streamlit**, and **Pandas**, this tool allows you to easily search for players, view detailed stats, and compare performances.
-
+- Link: [Premier League Player Stats Explorer](https://behramaras-premier-league-player-stats-analysis.streamlit.app)
 ---
 
 # Premier League Player Stats Explorer (2024-2025)
@@ -93,6 +93,10 @@ source venv/bin/activate
 venv\Scripts\activate
 ```
 
+### 3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 ## Usage
 
 ### 1. Launch the Streamlit app:
@@ -104,5 +108,8 @@ streamlit run app.py
 - Click table headers to sort by goals, assists, minutes, etc.
 - Compare two players using the dropdown menus.
 - View the top 10 goal contributors.
+
+### 3. Live Demo
+- You can also check the live application directly here: [Premier League Player Stats Explorer](https://behramaras-premier-league-player-stats-analysis.streamlit.app)
 
 **Author: Behram Aras**

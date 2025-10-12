@@ -5,7 +5,27 @@ Built with **Python**, **Streamlit**, and **Pandas**, this tool allows you to ea
 
 ---
 
+# Premier League Player Stats Explorer (2024-2025)
+
+This project scrapes, cleans, and visualizes Premier League player statistics for the 2024-2025 season using Python, pandas, and Streamlit.
+
+---
+
 ## Features
+
+1. **Data Scraping**
+   - Scrapes player stats from [FBref Premier League Stats](https://fbref.com/en/comps/9/2024-2025/stats/2024-2025-Premier-League-Stats) using `requests` and `BeautifulSoup`.
+   - Extracts the standard stats table hidden inside HTML comments.
+
+2. **Data Cleaning**
+   - Selects relevant columns such as player name, team, position, goals, assists, minutes played, age, and expected stats (xG, xAG).
+   - Renames columns to standardized and readable names.
+   - Removes repeated headers or invalid rows.
+   - Converts numeric columns to proper data types.
+   - Outputs a cleaned CSV file: `clean_players.csv`.
+
+3. **Interactive Streamlit App**
+   - Uses `st_aggrid` for interactive tables with sorting, filtering, and pagination.
 
 ### Player Search
 - Instantly search for players by name (case-insensitive).  
@@ -17,7 +37,7 @@ Built with **Python**, **Streamlit**, and **Pandas**, this tool allows you to ea
 
 ### Player Details
 - Select any player to view their **full individual statistics**, including:
-  - Goals, assists, expected goals (xG), expected assists (xAG), minutes, matches, and age.
+  - Goals, assists, expected goals, expected assists, minutes, matches, and age.
 
 ### Player Comparison
 - Compare **two players side by side** (even if they changed teams mid-season).  
@@ -39,7 +59,7 @@ Built with **Python**, **Streamlit**, and **Pandas**, this tool allows you to ea
 | **Streamlit** | Web framework for interactive dashboards |
 | **Pandas** | Data manipulation and aggregation |
 | **CSV** | Cleaned dataset (`clean_players.csv`) |
-
+| **st-aggrid**| Interactive tables with sorting, filtering, pagination, and sidebar options |
 ---
 
 ## Project Structure
@@ -62,5 +82,27 @@ Follow these steps to set up and run the project locally.
 ```bash
 git clone https://github.com/yourusername/premier-league-player-stats-explorer.git
 cd premier-league-player-stats-explorer
+```
 
+### 2. Create a virtual environment and activate it:
+```bash
+python -m venv venv
+# On macOS/Linux
+source venv/bin/activate
+# On Windows
+venv\Scripts\activate
+```
 
+## Usage
+
+### 1. Launch the Streamlit app:
+```bash
+streamlit run app.py
+```
+### 2. Explore player stats:
+- Use the search bar to filter players.
+- Click table headers to sort by goals, assists, minutes, etc.
+- Compare two players using the dropdown menus.
+- View the top 10 goal contributors.
+
+**Author: Behram Aras**

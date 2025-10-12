@@ -87,12 +87,24 @@ st.markdown("""
 [data-testid="stSidebar"] {background-color:#F2F2F7;}
 h1,h2,h3 {color:#3F1052;}
 .stDataFrame {background-color:#F2F2F7;border-radius:10px;padding:8px;}
-            
-/* ⚠️ Streamlit warning box customization */
-div[data-testid="stNotification"] {
-    background-color: #FFF8E1 !important;
-    color: #3F1052 !important;
+
+div[data-testid="stNotification"],
+div[data-testid="stMessage"],
+.stAlert,
+div[role="alert"] {
+    background-color: #FFF8E1 !important;  
+    color: #3F1052 !important;              
     border: 1px solid #E0C97F !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+}
+
+div[data-testid="stNotification"] p,
+div[data-testid="stMessage"] p,
+div[role="alert"] p,
+.stAlert p {
+    color: #3F1052 !important;
+    margin: 0;
 }
 </style>
 """, unsafe_allow_html=True)

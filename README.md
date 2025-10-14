@@ -18,7 +18,7 @@ This project scrapes, cleans, and visualizes Premier League player statistics fo
    - Extracts the standard stats table hidden inside HTML comments.
 
 2. **Data Cleaning**
-   - Selects relevant columns such as player name, team, position, goals, assists, minutes played, age, and expected stats (xG, xAG).
+   - Selects relevant columns such as player name, team, position, goals, assists, minutes played, age, and expected stats.
    - Renames columns to standardized and readable names.
    - Removes repeated headers or invalid rows.
    - Converts numeric columns to proper data types.

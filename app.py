@@ -82,7 +82,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- CUSTOM THEME + MOBILE RESPONSIVE CSS FIX 2 ---
+# --- CUSTOM THEME + MOBILE RESPONSIVE CSS FIX ---
 custom_css = """
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
@@ -92,9 +92,6 @@ custom_css = """
     background-color:#FFFFFF;
     color:#1C1C1E;
     overflow-x: hidden;
-}
-[data-testid="stHeader"] {
-    background:#3F1052;
 }
 [data-testid="stSidebar"] {
     background-color:#F2F2F7;
@@ -129,7 +126,7 @@ h1, h2, h3 {
 
 /* ---------- DATAFRAME WRAPPER ---------- */
 .stDataFrame {
-    background-color:#F2F2F7;
+    background-color:#FFFFFF;
     border-radius:10px;
     padding:8px;
     overflow-x: auto !important;
@@ -161,16 +158,20 @@ h1, h2, h3 {
     line-height: 1.3rem !important;
 }
 
-/* ---------- STICKY HEADER ON MOBILE ---------- */
-[data-testid="stHeader"] {
-    position: sticky;
-    top: 0;
-    z-index: 999;
-}
-
 </style>
 """
 components.html(custom_css, height=0)
+
+# --- HEADER COLOR ---
+js_code = """
+<script>
+const header = window.parent.document.querySelector('header');
+if(header){
+    header.style.backgroundColor = '#3F1052';
+}
+</script>
+"""
+components.html(js_code, height=0)
 
 # ---------------------------
 # --- DATA LOAD -------------

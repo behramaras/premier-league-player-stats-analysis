@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import streamlit.components.v1 as components
 from st_aggrid import AgGrid, GridOptionsBuilder
 
 # ---------------------------
@@ -15,8 +16,10 @@ def configure_aggrid(df, height=600):
         resizable=True,
         filter=True,
         sortable=True,
-        floatingFilter=True
+        floatingFilter=True,
+        min_width=80,
     )
+    gb.configure_selection(selection_mode="single", use_checkbox=True)
     return gb.build()
 
 def rename_columns(df, col_map):
@@ -29,7 +32,7 @@ def display_aggrid(df, height=600):
         df,
         gridOptions=configure_aggrid(df, height),
         height=height,
-        fit_columns_on_grid_load=True,
+        fit_columns_on_grid_load=False,
         enable_enterprise_modules=False,
         theme="balham"
     )
@@ -79,28 +82,44 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS
-# --- MOBILE RESPONSIVE + CUSTOM THEME FIX ---
-st.markdown("""
+# --- CUSTOM THEME + MOBILE RESPONSIVE CSS FIX 2 ---
+custom_css = """
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+
 /* ---------- BASE LAYOUT ---------- */
-[data-testid="stAppViewContainer"] {background-color:#FFFFFF;color:#1C1C1E;}
-[data-testid="stHeader"] {background:#3F1052;}
-[data-testid="stSidebar"] {background-color:#F2F2F7;}
-h1,h2,h3 {color:#3F1052;}
+[data-testid="stAppViewContainer"] {
+    background-color:#FFFFFF;
+    color:#1C1C1E;
+    overflow-x: hidden;
+}
+[data-testid="stHeader"] {
+    background:#3F1052;
+}
+[data-testid="stSidebar"] {
+    background-color:#F2F2F7;
+}
+h1, h2, h3 {
+    color:#3F1052;
+}
 
 /* ---------- BLOCK CONTAINER ---------- */
 .block-container {
-    padding: 1rem 1rem 2rem 1rem;
-    max-width: 100%;
+    padding: 1rem 0.5rem 2rem 0.5rem;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
 }
 
 /* ---------- AGGRID TABLES ---------- */
+.ag-root-wrapper,
 .ag-theme-balham {
     width: 100% !important;
+    max-width: 100% !important;
     overflow-x: auto !important;
     font-size: 0.85rem !important;
+}
+.ag-center-cols-container {
+    min-width: 100% !important;
 }
 .ag-cell {
     white-space: normal !important;
@@ -113,6 +132,8 @@ h1,h2,h3 {color:#3F1052;}
     background-color:#F2F2F7;
     border-radius:10px;
     padding:8px;
+    overflow-x: auto !important;
+    max-width: 100% !important;
 }
 
 /* ---------- ALERTS & NOTIFICATIONS ---------- */
@@ -146,8 +167,10 @@ h1, h2, h3 {
     top: 0;
     z-index: 999;
 }
+
 </style>
-""", unsafe_allow_html=True)
+"""
+components.html(custom_css, height=0)
 
 # ---------------------------
 # --- DATA LOAD -------------

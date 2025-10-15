@@ -80,14 +80,42 @@ st.set_page_config(
 )
 
 # Custom CSS
+# --- MOBILE RESPONSIVE + CUSTOM THEME FIX ---
 st.markdown("""
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+/* ---------- BASE LAYOUT ---------- */
 [data-testid="stAppViewContainer"] {background-color:#FFFFFF;color:#1C1C1E;}
 [data-testid="stHeader"] {background:#3F1052;}
 [data-testid="stSidebar"] {background-color:#F2F2F7;}
 h1,h2,h3 {color:#3F1052;}
-.stDataFrame {background-color:#F2F2F7;border-radius:10px;padding:8px;}
 
+/* ---------- BLOCK CONTAINER ---------- */
+.block-container {
+    padding: 1rem 1rem 2rem 1rem;
+    max-width: 100%;
+}
+
+/* ---------- AGGRID TABLES ---------- */
+.ag-theme-balham {
+    width: 100% !important;
+    overflow-x: auto !important;
+    font-size: 0.85rem !important;
+}
+.ag-cell {
+    white-space: normal !important;
+    text-overflow: clip !important;
+    word-wrap: break-word !important;
+}
+
+/* ---------- DATAFRAME WRAPPER ---------- */
+.stDataFrame {
+    background-color:#F2F2F7;
+    border-radius:10px;
+    padding:8px;
+}
+
+/* ---------- ALERTS & NOTIFICATIONS ---------- */
 div[data-testid="stNotification"],
 div[data-testid="stMessage"],
 .stAlert,
@@ -98,13 +126,25 @@ div[role="alert"] {
     border-radius: 6px !important;
     padding: 8px 12px !important;
 }
-
 div[data-testid="stNotification"] p,
 div[data-testid="stMessage"] p,
 div[role="alert"] p,
 .stAlert p {
     color: #3F1052 !important;
     margin: 0;
+}
+
+/* ---------- HEADERS (MOBILE FRIENDLY) ---------- */
+h1, h2, h3 {
+    font-size: 1.1rem !important;
+    line-height: 1.3rem !important;
+}
+
+/* ---------- STICKY HEADER ON MOBILE ---------- */
+[data-testid="stHeader"] {
+    position: sticky;
+    top: 0;
+    z-index: 999;
 }
 </style>
 """, unsafe_allow_html=True)

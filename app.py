@@ -89,15 +89,15 @@ custom_css = """
 
 /* ---------- BASE LAYOUT ---------- */
 [data-testid="stAppViewContainer"] {
-    background-color:#FFFFFF;
+    background-color:#FFFFFF; /* Beyaz arka plan */
     color:#1C1C1E;
     overflow-x: hidden;
 }
 [data-testid="stSidebar"] {
-    background-color:#F2F2F7;
+    background-color:#E5E0F7; /* Hafif mor tonlu sidebar */
 }
 h1, h2, h3 {
-    color:#3F1052;
+    color:#4B0082; /* Premier Lig moru */
 }
 
 /* ---------- BLOCK CONTAINER ---------- */
@@ -138,9 +138,9 @@ div[data-testid="stNotification"],
 div[data-testid="stMessage"],
 .stAlert,
 div[role="alert"] {
-    background-color: #FFF8E1 !important;  
-    color: #3F1052 !important;              
-    border: 1px solid #E0C97F !important;
+    background-color: #FFF8E1 !important;
+    color: #4B0082 !important;
+    border: 1px solid #A020F0 !important;
     border-radius: 6px !important;
     padding: 8px 12px !important;
 }
@@ -148,7 +148,7 @@ div[data-testid="stNotification"] p,
 div[data-testid="stMessage"] p,
 div[role="alert"] p,
 .stAlert p {
-    color: #3F1052 !important;
+    color: #4B0082 !important;
     margin: 0;
 }
 
@@ -167,7 +167,8 @@ js_code = """
 <script>
 const header = window.parent.document.querySelector('header');
 if(header){
-    header.style.backgroundColor = '#3F1052';
+    header.style.backgroundColor = '#4B0082'; /* Premier Lig moru */
+    header.style.color = '#FFFFFF';           /* Beyaz yazı */
 }
 </script>
 """
